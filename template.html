@@ -30,7 +30,7 @@
 ####一、模板加载方式
 1. 页面内嵌套，寄存在script标签元素中，根据DOM操作获取模板内容
 2. 页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：
-```
+``` JavaScript
 var xhr = new XMLHttpRequest(); 
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {     
@@ -40,6 +40,7 @@ xhr.onreadystatechange = function () {
 xhr.open('GET', '/template.html');
 xhr.send();
 ```
+3. 预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
@@ -53,7 +54,7 @@ xhr.send();
 <li>页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：</li>
 </ol>
 
-<pre><code>var xhr = new XMLHttpRequest(); 
+<pre><code class=" JavaScript">var xhr = new XMLHttpRequest(); 
 xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {     
         //do something with xhr.responseText
@@ -62,6 +63,10 @@ xhr.onreadystatechange = function () {
 xhr.open('GET', '/template.html');
 xhr.send();
 </code></pre>
+
+<ol>
+<li>预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs</li>
+</ol>
 <!-- content end -->
 </div>
 <br>
