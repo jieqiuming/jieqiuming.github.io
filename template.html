@@ -25,11 +25,11 @@
 	</div>
 <div id="md" style="display: none;">
 <!-- markdown -->
-##JavaScipt模板
+##JavaScipt模板引擎
 
-####一、模板加载方式
-1. 页面内嵌套，寄存在script标签元素中，根据DOM操作获取模板内容
-2. 页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：
+####一、如何管理组织模板
+1. SCRIPT TAGS：页面内嵌套，寄存在script标签元素中，根据DOM操作获取模板内容
+2. 页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：  
 ``` JavaScript
 var xhr = new XMLHttpRequest(); 
 xhr.onreadystatechange = function () {
@@ -39,19 +39,27 @@ xhr.onreadystatechange = function () {
 };      
 xhr.open('GET', '/template.html');
 xhr.send();
-```
-3. 预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs
+``` 
+3. PRECOMPILED TEMPLATES：预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs  
+4. AMD & REQUIREJS：
+####二、参考
+1. [Client-Side Templating][1]
+2. [Best Practices When Working With JavaScript Templates][2]
+
+
+[1]: http://www.smashingmagazine.com/2012/12/05/client-side-templating/  "Client-Side Templating"
+[2]: http://code.tutsplus.com/tutorials/best-practices-when-working-with-javascript-templates--net-28364 "Best Practices When Working With JavaScript Templates"
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
-<h2 id="javascipt">JavaScipt模板</h2>
+<h2 id="javascipt">JavaScipt模板引擎</h2>
 
-<h4 id="">一、模板加载方式</h4>
+<h4 id="">一、如何管理组织模板</h4>
 
 <ol>
-<li>页面内嵌套，寄存在script标签元素中，根据DOM操作获取模板内容</li>
-<li>页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：</li>
+<li>SCRIPT TAGS：页面内嵌套，寄存在script标签元素中，根据DOM操作获取模板内容</li>
+<li>页面外组织模板文件，通过jquery.load函数加载模板内容，并且注入到DOM元素内。本质上是利用xhr对象进行ajax调用：  </li>
 </ol>
 
 <pre><code class=" JavaScript">var xhr = new XMLHttpRequest(); 
@@ -64,8 +72,15 @@ xhr.open('GET', '/template.html');
 xhr.send();
 </code></pre>
 
+<p>
+3. PRECOMPILED TEMPLATES：预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs <br>
+4. AMD &amp; REQUIREJS：</p>
+
+<h4 id="">二、参考</h4>
+
 <ol>
-<li>预编译模板文件，生成模板js文件，调用的使用直接引用js，artTemplate和tmodjs</li>
+<li><a href="http://www.smashingmagazine.com/2012/12/05/client-side-templating/" title="Client-Side Templating">Client-Side Templating</a></li>
+<li><a href="http://code.tutsplus.com/tutorials/best-practices-when-working-with-javascript-templates--net-28364" title="Best Practices When Working With JavaScript Templates">Best Practices When Working With JavaScript Templates</a></li>
 </ol>
 <!-- content end -->
 </div>
