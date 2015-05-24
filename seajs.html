@@ -25,12 +25,150 @@
 	</div>
 <div id="md" style="display: none;">
 <!-- markdown -->
+###一、类型判断
 
+```
+       function isType(type) {
+          return function(obj) {
+            return {}.toString.call(obj) == "[object " + type + "]"
+          }
+        }
+    
+        var isObject = isType("Object")
+        var isString = isType("String")
+        var isArray = Array.isArray || isType("Array")
+        var isFunction = isType("Function")
+```
+
+###二、URL路径操作
+
+```
+
+var DIRNAME_RE = /[^?#]*\//
+
+var DOT_RE = /\/\.\//g
+var DOUBLE_DOT_RE = /\/[^/]+\/\.\.\//
+var MULTI_SLASH_RE = /([^:/])\/+\//g
+
+// Extract the directory portion of a path
+// dirname("a/b/c.js?t=123#xx/zz") ==> "a/b/"
+// ref: http://jsperf.com/regex-vs-split/2
+function dirname(path) {
+  return path.match(DIRNAME_RE)[0]
+}
+
+// Canonicalize a path
+// realpath("http://test.com/a//./b/../c") ==> "http://test.com/a/c"
+function realpath(path) {
+  // /a/b/./c/./d ==> /a/b/c/d
+  path = path.replace(DOT_RE, "/")
+
+  /*
+    @author wh1100717
+    a//b/c ==> a/b/c
+    a///b/////c ==> a/b/c
+    DOUBLE_DOT_RE matches a/b/c//../d path correctly only if replace // with / first
+  */
+  path = path.replace(MULTI_SLASH_RE, "$1/")
+
+  // a/b/c/../../d  ==>  a/b/../d  ==>  a/d
+  while (path.match(DOUBLE_DOT_RE)) {
+    path = path.replace(DOUBLE_DOT_RE, "/")
+  }
+
+  return path
+}
+
+// Normalize an id
+// normalize("path/to/a") ==> "path/to/a.js"
+// NOTICE: substring is faster than negative slice and RegExp
+function normalize(path) {
+  var last = path.length - 1
+  var lastC = path.charAt(last)
+
+  // If the uri ends with `#`, just return it without '#'
+  if (lastC === "#") {
+    return path.substring(0, last)
+  }
+
+  return (path.substring(last - 2) === ".js" ||
+      path.indexOf("?") > 0 ||
+      lastC === "/") ? path : path + ".js"
+}
+
+```
 <!-- markdown end -->
 </div>
 <div class="entry" id="main">
 <!-- content -->
+<h3 id="">一、类型判断</h3>
 
+<pre><code>       function isType(type) {
+          return function(obj) {
+            return {}.toString.call(obj) == "[object " + type + "]"
+          }
+        }
+
+        var isObject = isType("Object")
+        var isString = isType("String")
+        var isArray = Array.isArray || isType("Array")
+        var isFunction = isType("Function")
+</code></pre>
+
+<h3 id="url">二、URL路径操作</h3>
+
+<pre><code>var DIRNAME_RE = /[^?#]*\//
+
+var DOT_RE = /\/\.\//g
+var DOUBLE_DOT_RE = /\/[^/]+\/\.\.\//
+var MULTI_SLASH_RE = /([^:/])\/+\//g
+
+// Extract the directory portion of a path
+// dirname("a/b/c.js?t=123#xx/zz") ==&gt; "a/b/"
+// ref: http://jsperf.com/regex-vs-split/2
+function dirname(path) {
+  return path.match(DIRNAME_RE)[0]
+}
+
+// Canonicalize a path
+// realpath("http://test.com/a//./b/../c") ==&gt; "http://test.com/a/c"
+function realpath(path) {
+  // /a/b/./c/./d ==&gt; /a/b/c/d
+  path = path.replace(DOT_RE, "/")
+
+  /*
+    @author wh1100717
+    a//b/c ==&gt; a/b/c
+    a///b/////c ==&gt; a/b/c
+    DOUBLE_DOT_RE matches a/b/c//../d path correctly only if replace // with / first
+  */
+  path = path.replace(MULTI_SLASH_RE, "$1/")
+
+  // a/b/c/../../d  ==&gt;  a/b/../d  ==&gt;  a/d
+  while (path.match(DOUBLE_DOT_RE)) {
+    path = path.replace(DOUBLE_DOT_RE, "/")
+  }
+
+  return path
+}
+
+// Normalize an id
+// normalize("path/to/a") ==&gt; "path/to/a.js"
+// NOTICE: substring is faster than negative slice and RegExp
+function normalize(path) {
+  var last = path.length - 1
+  var lastC = path.charAt(last)
+
+  // If the uri ends with `#`, just return it without '#'
+  if (lastC === "#") {
+    return path.substring(0, last)
+  }
+
+  return (path.substring(last - 2) === ".js" ||
+      path.indexOf("?") &gt; 0 ||
+      lastC === "/") ? path : path + ".js"
+}
+</code></pre>
 <!-- content end -->
 </div>
 <br>
