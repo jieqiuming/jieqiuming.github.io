@@ -30,10 +30,19 @@
 ###二、页面渲染过程
 
 ###三、repaint
-
+重绘是一个元素外观的改变所触发的浏览器行为，例如改变*visibility*、*outline*、*背景色*等属性
 ###四、reflow
-
+1. DOM元素的几何属性变化
+2. DOM树的结构变化
+3. 获取某些属性，offsetTop、offsetLeft、 offsetWidth、offsetHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、 clientTop、clientLeft、clientWidth、clientHeight、getComputedStyle() (currentStyle in IE)
+，缓存这些属性
+4. 改变元素的一些样式，调整浏览器窗口大小
 ###五、优化页面性能
+1. 将多次改变样式属性的操作合并成一次操作
+2. 将需要多次重排的元素，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。例如有动画效果的元素就最好设置为绝对定位。
+3. 在内存中多次操作节点，完成后再添加到文档中去。例如要异步获取表格数据，渲染到页面。可以先取得数据后在内存中构建整个表格的html片段，再一次性添加到文档中去，而不是循环添加每一行。
+4. 由于display属性为none的元素不在渲染树中，对隐藏的元素操作不会引发其他元素的重排。如果要对一个元素进行复杂的操作时，可以先隐藏它，操作完成后再显示。这样只在隐藏和显示时触发2次重排。
+5. 在需要经常获取那些引起浏览器重排的属性值时，要缓存到变量。
 
 ###六、参考资源
 1. [Rendering:repaint,reflow/relayout,restyle][1]
@@ -41,11 +50,13 @@
 3. [浏览器的工作原理][3]
 4. [为什么每个前端开发都要理解页面的渲染][4]
 5. [从输入 URL 到页面加载完成的过程中都发生了什么事情][5]
+6. [浏览器的重绘与重排][6]
 [1]: http://www.phpied.com/rendering-repaint-reflowrelayout-restyle/ "endering-repaint-reflowrelayout-restyle"
 [2]: http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/ "how browser work"
 [3]: http://kb.cnblogs.com/page/129756/ "浏览器的工作原理"
 [4]: http://blog.jobbole.com/72692/ "为什么每个前端开发都要理解页面的渲染"
 [5]: http://fex.baidu.com/blog/2014/05/what-happen/ "从输入 URL 到页面加载完成的过程中都发生了什么事情"
+[6]: http://developer.51cto.com/art/201308/408412.htm "浏览器的重绘与重排"
 
 <!-- markdown end -->
 </div>
@@ -57,9 +68,27 @@
 
 <h3 id="repaint">三、repaint</h3>
 
+<p>重绘是一个元素外观的改变所触发的浏览器行为，例如改变<em>visibility</em>、<em>outline</em>、<em>背景色</em>等属性</p>
+
 <h3 id="reflow">四、reflow</h3>
 
+<ol>
+<li>DOM元素的几何属性变化</li>
+<li>DOM树的结构变化</li>
+<li>获取某些属性，offsetTop、offsetLeft、 offsetWidth、offsetHeight、scrollTop、scrollLeft、scrollWidth、scrollHeight、 clientTop、clientLeft、clientWidth、clientHeight、getComputedStyle() (currentStyle in IE)
+，缓存这些属性</li>
+<li>改变元素的一些样式，调整浏览器窗口大小</li>
+</ol>
+
 <h3 id="">五、优化页面性能</h3>
+
+<ol>
+<li>将多次改变样式属性的操作合并成一次操作</li>
+<li>将需要多次重排的元素，position属性设为absolute或fixed，这样此元素就脱离了文档流，它的变化不会影响到其他元素。例如有动画效果的元素就最好设置为绝对定位。</li>
+<li>在内存中多次操作节点，完成后再添加到文档中去。例如要异步获取表格数据，渲染到页面。可以先取得数据后在内存中构建整个表格的html片段，再一次性添加到文档中去，而不是循环添加每一行。</li>
+<li>由于display属性为none的元素不在渲染树中，对隐藏的元素操作不会引发其他元素的重排。如果要对一个元素进行复杂的操作时，可以先隐藏它，操作完成后再显示。这样只在隐藏和显示时触发2次重排。</li>
+<li>在需要经常获取那些引起浏览器重排的属性值时，要缓存到变量。</li>
+</ol>
 
 <h3 id="">六、参考资源</h3>
 
@@ -69,6 +98,7 @@
 <li><a href="http://kb.cnblogs.com/page/129756/" title="浏览器的工作原理">浏览器的工作原理</a></li>
 <li><a href="http://blog.jobbole.com/72692/" title="为什么每个前端开发都要理解页面的渲染">为什么每个前端开发都要理解页面的渲染</a></li>
 <li><a href="http://fex.baidu.com/blog/2014/05/what-happen/" title="从输入 URL 到页面加载完成的过程中都发生了什么事情">从输入 URL 到页面加载完成的过程中都发生了什么事情</a></li>
+<li><a href="http://developer.51cto.com/art/201308/408412.htm" title="浏览器的重绘与重排">浏览器的重绘与重排</a></li>
 </ol>
 <!-- content end -->
 </div>
