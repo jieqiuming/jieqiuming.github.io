@@ -1,0 +1,137 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="Keywords" content="blog"/>
+    <meta name="Description" content="blog"/>
+    <title>Simple</title>
+    <link rel="shortcut icon" href="/static/favicon.png"/>
+    <link rel="stylesheet" type="text/css" href="/main.css" />
+</head>
+<body>
+<div class="main">
+    <div class="header">
+    	<ul id="pages">
+            <li><a href="/">home</a></li>
+            <li><a href="/#/tags">tags</a></li>
+            <li><a href="/#/archive">archive</a></li>
+    	</ul>
+    </div>
+	<div class="wrap-header">
+	<h1>
+    <a href="/" id="title"></a>
+	</h1>
+	</div>
+<div id="md" style="display: none;">
+<!-- markdown -->
+##问题描述
+打开本地页面，WebBrowser报安全提示：“为帮助保护你的安全，你的Web浏览器已经限制此文件显示可能访问你的计算机的活动内容。单击此处查看选项…”。
+
+##问题分析及解决方案
+
+###一、问题分析
+webbrowser本地打开页面，网页将运行在Local Machine Zone中，XP SP2之前，Local Machine Zone的网页具有所有权限，这就造成了安全漏洞，因此从XP SP2后，Local Machine Zone中的网页就默认禁用ActiveX和脚本了。参见[文档1](http://blogs.msdn.com/b/ieinternals/archive/2011/03/23/understanding-local-machine-zone-lockdown-restricted-this-webpage-from-running-scripts-or-activex-controls.aspx)和[文档2](http://msdn.microsoft.com/en-us/library/ms537628%28v=vs.85%29.ASPX)。
+
+
+###二、解决方案
+
+在网页头部增加如下代码：
+```
+<!-- saved from url=(0016)http://localhost -->
+```
+
+意思是：指示WebBrowser在Local Intranet Zone运行该网页
+<!-- markdown end -->
+</div>
+<div class="entry" id="main">
+<!-- content -->
+<h2 id="">问题描述</h2>
+
+<p>打开本地页面，WebBrowser报安全提示：“为帮助保护你的安全，你的Web浏览器已经限制此文件显示可能访问你的计算机的活动内容。单击此处查看选项…”。</p>
+
+<h2 id="">问题分析及解决方案</h2>
+
+<h3 id="">一、问题分析</h3>
+
+<p>webbrowser本地打开页面，网页将运行在Local Machine Zone中，XP SP2之前，Local Machine Zone的网页具有所有权限，这就造成了安全漏洞，因此从XP SP2后，Local Machine Zone中的网页就默认禁用ActiveX和脚本了。参见<a href="http://blogs.msdn.com/b/ieinternals/archive/2011/03/23/understanding-local-machine-zone-lockdown-restricted-this-webpage-from-running-scripts-or-activex-controls.aspx">文档1</a>和<a href="http://msdn.microsoft.com/en-us/library/ms537628%28v=vs.85%29.ASPX">文档2</a>。</p>
+
+<h3 id="">二、解决方案</h3>
+
+<p>在网页头部增加如下代码：</p>
+
+<pre><code>&lt;!-- saved from url=(0016)http://localhost --&gt;
+</code></pre>
+
+<p>意思是：指示WebBrowser在Local Intranet Zone运行该网页</p>
+<!-- content end -->
+</div>
+<br>
+<br>
+    <div id="disqus_thread"></div>
+	<div class="footer">
+		<p>© Copyright 2014 by isnowfy, Designed by isnowfy</p>
+	</div>
+</div>
+<script src="main.js"></script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ["\\(", "\\)"]], processEscapes: true}});
+</script>
+<script id="content" type="text/mustache">
+    <h1>{{title}}</h1>
+    <div class="tag">
+    {{date}}
+    {{#tags}}
+    <a href="/#/tag/{{name}}">#{{name}}</a>
+    {{/tags}}
+    </div>
+</script>
+<script id="pagesTemplate" type="text/mustache">
+    {{#pages}}
+    <li>
+        <a href="{{path}}">{{title}}</a>
+    </li>
+    {{/pages}}
+</script>
+<script>
+$(document).ready(function() {
+    $.ajax({
+        url: "main.json",
+        type: "GET",
+        dataType: "json",
+        success: function(data) {
+            $("#title").html(data.name);
+            var pagesTemplate = Hogan.compile($("#pagesTemplate").html());
+            var pagesHtml = pagesTemplate.render({"pages": data.pages});
+            $("#pages").append(pagesHtml);
+            //path
+            var path = "webbrowser.html";
+            //path end
+            var now = 0;
+            for (var i = 0; i < data.posts.length; ++i)
+                if (path == data.posts[i].path)
+                    now = i;
+            var post = data.posts[now];
+            var tmp = post.tags.split(" ");
+            var tags = [];
+            for (var i = 0; i < tmp.length; ++i)
+                if (tmp[i].length > 0)
+                    tags.push({"name": tmp[i]});
+            var contentTemplate = Hogan.compile($("#content").html());
+            var contentHtml = contentTemplate.render({"title": post.title, "tags": tags, "date": post.date});
+            $("#main").prepend(contentHtml);
+            if (data.disqus_shortname.length > 0) {
+                var disqus_shortname = data.disqus_shortname;
+                (function() {
+                    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+                    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                })();
+            }
+        }
+    });
+});
+</script>
+</body>
+</html>
