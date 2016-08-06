@@ -1,2 +1,1 @@
-# github.io
-my blog website
+# jieqiuming.github.io
