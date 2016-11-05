@@ -1,3 +1,12 @@
+---
+layout: post
+title: PHP利用curl发起Http请求的400错误分析
+category: php
+tags: PHP,CURL,HTTP,400
+date: 2014-05-01
+---
+
+
 # PHP利用curl发起Http请求的400错误分析
 
 ### 背景
