@@ -5,7 +5,7 @@ welcome_message: <a href="http://qmjie.sinaapp.com/apple/" target="_blank">『�
 description: 嗨，我是@_truemen，一名来自中国的 Web 开发者。现居合肥，正在修行，探求创意之源。
 creator: <a href="http://weibo.com/u/2459242834">@_truemen</a>
 
-url: "http://qmjie.github.io"
+url: "http://blog.truemen.cn"
 
 permalink: /:year/:month/:title/
 
@@ -26,7 +26,7 @@ blog_button:
 # Navigation buttons in the front page.
 nav:
     - {title: Projects, description: My Projects, url: 'http://project.truemen.cn'}
-    - {title: 收藏, description: 收藏, url: 'http://qmjie.sinaapp.com/pocket/'}
+    - {title: 收藏, description: 收藏, url: 'http://pocket.truemen.cn/'}
 
 # Pagination
 gems: [jekyll-paginate]
